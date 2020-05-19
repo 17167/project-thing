@@ -10,7 +10,6 @@ import os
 app = Flask(__name__)
 login = LoginManager(app)
 
-
 @app.route('/')
 def home():
     if not session.get('logged in'):
@@ -23,7 +22,6 @@ def do_admin_login():
     else:
         flash('Incorrect Credentials')
     return home()
-
 
 #incase of error, enters debugging mode
 if __name__ == '__main__':
