@@ -10,7 +10,8 @@ import os
 app = Flask(__name__)
 login = LoginManager(app)
 
-@app.route('/')
+#if no users are logged in, refers user to login page
+@app.route('/git pu')
 def home():
     if not session.get('logged in'):
         return render_template('login.html')
