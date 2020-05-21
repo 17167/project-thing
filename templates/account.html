@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Signup Page</title>
+    <title>ACCOUNT LOL</title>
 </head>
 <body>
-    
+    <h1><strong>Work In Progress</strong></h1>
+    <P>Click <a href="/logout">here</a> to logout!</P>
+    {% for message in get_flashed_messages() %}
+    {{ message }}
+    {% endfor %}
 </body>
 </html>
