@@ -4,21 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ACCOUNT LOL</title>
+    <title>Document</title>
 </head>
 <body>
-    <h1><strong>Work In Progress</strong></h1>
-    <form action='/'>
-        <input type='submit' value='Logout'>
+    <h1>Work in Progress</h1>
+    <form action='/login'>
+        <input type='submit' value='Click here to login'>
     </form>
     <br>
     {% for message in get_flashed_messages() %}
     {{ message }}
-    {% endfor %}
-    <h1>Task List</h1>
-    {% for list in todo %}
-    <strong>Task:</strong> {{ list.Task }}
-    <br><br>
     {% endfor %}
 </body>
 </html>
