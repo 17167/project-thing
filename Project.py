@@ -37,12 +37,20 @@ def welcome():
 def login():
     error = None
     if request.method == 'POST':
-        if request.form['password'] != 'password' or request.form['username'] != 'admin':
-            error = "Invalid Credentials. Try Again."
-        else:
+        getdb = connect_db().cursor()
+        sql_list = "SELECT ID FROM Users WHERE Username = ? AND Password = ?"
+        getdb.execute(sql_list, (request.form['username'], request.form['password']))
+        correct = getdb.fetchall()
+        if len(correct) > 0:
+            correct = correct[0][0]
             session['logged_in'] = True
-            flash("You're logged in as admin")
+            sql_list = "SELECT Username FROM Users WHERE ID = ?"
+            getdb.execute(sql_list, (correct,))
+            results = getdb.fetchall()[0][0]
+            flash("Welcome {0}. We've been expecting you {0}.".format(results))
             return redirect(url_for('account')) 
+        else:
+            error = "Invalid Credentials. Try Again."
     return render_template('login.html', error=error)
 
 @app.route('/signup')
@@ -55,8 +63,8 @@ def signup():
 def account():
     if request.method == "GET":
         if 'logged_in' in session:
-            g.db = connect_db()
-            cur = g.db.execute('select * from Tasks')
+            getdb = connect_db()
+            cur = getdb.execute('select * from Tasks')
             todo = [dict(Task=row[1]) for row in cur.fetchall()]
             return render_template('account.html', todo=todo)
         else:
