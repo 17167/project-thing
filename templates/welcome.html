@@ -12,6 +12,10 @@
         <input type='submit' value='Click here to login'>
     </form>
     <br>
+    <form action='/signup'>
+        <input type='submit' value='Click here to signup'>
+    </form>
+    <br>
     {% for message in get_flashed_messages() %}
     {{ message }}
     {% endfor %}

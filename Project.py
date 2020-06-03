@@ -12,7 +12,10 @@ app.database = "Users.db"
 
 #connects sqlite3 to web app
 def connect_db():
-    return sqlite3.connect(app.database)
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite3.connect(app.database)
+    return db
 
 #login required decorator
 def login_required(f):
@@ -41,20 +44,39 @@ def login():
         sql_list = "SELECT ID FROM Users WHERE Username = ? AND Password = ?"
         getdb.execute(sql_list, (request.form['username'], request.form['password']))
         correct = getdb.fetchall()
-        if len(correct) > 0:
+        if len(correct) > 0: #checks if user exists, and if credentials are correct
             correct = correct[0][0]
             session['logged_in'] = True
             sql_list = "SELECT Username FROM Users WHERE ID = ?"
             getdb.execute(sql_list, (correct,))
             results = getdb.fetchall()[0][0]
-            flash("Welcome {0}. We've been expecting you {0}.".format(results))
+            flash("Welcome to yo task board {}".format(results))
             return redirect(url_for('account')) 
         else:
             error = "Invalid Credentials. Try Again."
     return render_template('login.html', error=error)
 
-@app.route('/signup')
+@app.route('/signup', methods=["GET", "POST"])
 def signup():
+    if request.method == 'POST':
+        error = None
+        getdb = connect_db().cursor()
+        new_user = request.form["newuser"] #gets whatever the username is
+        new_password = request.form["newpassword"] #gets whatever the password is
+        if new_user == "" or new_password == "":
+            error = "Enter a valid username please"
+            return render_template("signup.html", error=error)
+        sql = "SELECT Username FROM Users where Username = ?"
+        getdb.execute(sql, (new_user,))
+        if bool(getdb.fetchall()):
+            error = "Username is taken, please find a new one"
+            return render_template("signup.html", error=error)
+        sql = "INSERT INTO Users(Username, Password) VALUES (?,?)" #puts whatever user's username/password is into database
+        getdb.execute(sql,(new_user,new_password))
+        connect_db().commit()
+        flash("You're all signed up!")
+        return redirect(url_for('login'))
+
     return render_template('signup.html')
 
 #account page for users to add stuff to their todo list (at some point)

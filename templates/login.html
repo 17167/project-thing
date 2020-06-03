@@ -18,6 +18,13 @@
         {% if error %}
             <p class="error"><strong>Error:</strong> {{ error }}</p>
         {% endif %}
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p><strong>{{ message }}</strong></p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
         </div>
     </body>
 </html>

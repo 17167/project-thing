@@ -1,12 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Signup Page</title>
-</head>
-<body>
-    
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Signup Page</title>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Signup Page</h1>
+            <br>
+        <form action="/signup" method="POST">
+            <input type="username" name="newuser" placeholder="Username">
+            <input type="password" name="newpassword" placeholder="Password">
+            <input type="submit" value="Signup">
+        </form>
+        <br>
+        {% if error %}
+        <p class="error"><strong>Error:</strong> {{ error }}</p>
+        {% endif %}
+        </div>
+    </body>
 </html>
