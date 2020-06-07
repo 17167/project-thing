@@ -11,7 +11,7 @@ import os
 app = Flask(__name__)
 app.database = "Users.db"
 
-#connects sqlite3 to web app
+#connects database to webapp
 def connect_db():
     db = getattr(g, '_database', None)
     if db is None:
@@ -47,7 +47,6 @@ def login():
         sql_list = "SELECT Username,Password FROM Users WHERE Username = ?"
         getdb.execute(sql_list, (user,))
         correct = getdb.fetchall()
-        print(correct)
         if len(correct) > 0: 
             results = correct[0][1]
             if check_password_hash(results, password):
@@ -66,13 +65,13 @@ def signup():
         getdb = connect_db().cursor()
         new_user = request.form["newuser"] #gets whatever the username is
         new_password = request.form["newpassword"] #gets whatever the password is
-        if new_user == "" or new_password == "":
+        if new_user == "" or new_password == "": #ensures username/password cannot be blank 
             error = "Enter a valid username or password please"
             return render_template("signup.html", error=error)
         sql = "SELECT Username FROM Users where Username = ?"
         getdb.execute(sql, (new_user,))
         if bool(getdb.fetchall()):
-            error = "Username is taken, please find a new one"
+            error = "Username is taken, please find a new one" #if username is already in db, asks users to input a new one
             return render_template("signup.html", error=error)
         sql = "INSERT INTO Users(Username, Password) VALUES (?,?)" #puts whatever user's username/password is into database
         getdb.execute(sql,(new_user, generate_password_hash(new_password, "sha256")))
@@ -82,18 +81,32 @@ def signup():
     return render_template('signup.html')
 
 #account page for users to add stuff to their todo list (at some point)
-@app.route('/account')
+@app.route('/account', methods=["GET", "POST"])
 @login_required
 def account():
+    error = None
     if request.method == "GET":
         if 'logged_in' in session:
             getdb = connect_db()
             cur = getdb.execute('select * from Tasks')
-            todo = [dict(Task=row[1]) for row in cur.fetchall()]
-            return render_template('account.html', todo=todo)
+            problem = [dict(Task=row[1]) for row in cur.fetchall()]
+            return render_template('account.html', problem=problem)
         else:
             return redirect(url_for('login'))
-    return render_template('account.html')
+    return render_template("account.html")
+
+@app.route('/addtask', methods=["POST"])
+def add():
+    if request.method == "POST":
+        new_task = request.form["newtask"]
+        getdb = connect_db().cursor()
+        if new_task == "":
+            error = "Please enter a valid task!"
+        else:
+            sql = "INSERT INTO Tasks(Task) VALUES (?)"
+            getdb.execute(sql, (new_task,))
+            connect_db().commit()
+    return redirect("/account")
 
 #logs user out, redirects them to welcome/home page
 @app.route('/logout')

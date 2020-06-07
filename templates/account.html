@@ -12,11 +12,22 @@
         <input type='submit' value='Logout'>
     </form>
     <br>
+    <div class=container>
+        <form action="/addtask" method="POST">
+            <input type="text" name="newtask" placeholder="Add a new task!">
+            <input type="submit" value="Add Task">
+        </form>
+
+    {% if error %}
+        <p class="error"><strong>Error:</strong> {{ error }}</p>
+    {% endif %}
+    </div>
+    <br>
     {% for message in get_flashed_messages() %}
-    {{ message }}
+        {{ message }}
     {% endfor %}
     <h1>Task List</h1>
-    {% for list in todo %}
+    {% for list in problem %}
     <strong>Task:</strong> {{ list.Task }}
     <br><br>
     {% endfor %}
