@@ -44,18 +44,17 @@ def login():
         getdb = connect_db().cursor()
         user = request.form["username"]
         password = request.form["password"]
-        sql_list = "SELECT Username,Password FROM Users WHERE Username = ?"
+        sql_list = "SELECT Username,Password,ID FROM Users WHERE Username = ?"
         getdb.execute(sql_list, (user,))
-        correct = getdb.fetchall()
+        correct = getdb.fetchall()[0]
         if len(correct) > 0: 
-            results = correct[0][1]
+            results = correct[1]
             if check_password_hash(results, password):
-                session['logged_in'] = True
-                results = correct[0][0]
+                session['logged_in'] = correct[2]
+                results = correct[0]
                 flash("Welcome to yo task board {}".format(results))
-                return redirect(url_for('account')) 
-        else:
-            error = "Invalid Credentials. Try Again."
+                return redirect('/account')
+        error = "Invalid Credentials. Try Again."
     return render_template('login.html', error=error)
 
 @app.route('/signup', methods=["GET", "POST"])
@@ -80,32 +79,29 @@ def signup():
         return redirect(url_for('login'))
     return render_template('signup.html')
 
-#account page for users to add stuff to their todo list (at some point)
+#account page for users to add stuff to their todo list
 @app.route('/account', methods=["GET", "POST"])
 @login_required
 def account():
-    error = None
     if request.method == "GET":
-        if 'logged_in' in session:
-            getdb = connect_db()
-            cur = getdb.execute('select * from Tasks')
-            problem = [dict(Task=row[1]) for row in cur.fetchall()]
-            return render_template('account.html', problem=problem)
-        else:
-            return redirect(url_for('login'))
+        user_id = session["logged_in"]
+        getdb = connect_db()
+        cur = getdb.execute('SELECT Task FROM Tasks JOIN Users ON Users.ID = Tasks.UserID WHERE Users.ID = ?', (user_id,))
+        problem = [dict(Task=row[0]) for row in cur.fetchall()]
+        return render_template('account.html', problem=problem)
     return render_template("account.html")
 
 @app.route('/addtask', methods=["POST"])
 def add():
     if request.method == "POST":
+        user_id = session["logged_in"]
         new_task = request.form["newtask"]
         getdb = connect_db().cursor()
-        if new_task == "":
-            error = "Please enter a valid task!"
-        else:
-            sql = "INSERT INTO Tasks(Task) VALUES (?)"
-            getdb.execute(sql, (new_task,))
-            connect_db().commit()
+        #if new_task == "":
+           #error = "Please enter a valid task!"
+        sql = "INSERT INTO Tasks(Task,UserID) VALUES (?,?)"
+        getdb.execute(sql, (new_task,user_id,))
+        connect_db().commit()
     return redirect("/account")
 
 #logs user out, redirects them to welcome/home page
@@ -115,6 +111,7 @@ def logout():
     session.pop('logged_in', None)
     flash('You were just logged out!')
     return redirect(url_for('welcome'))
+
 
 #incase of error, enters debugging mode
 if __name__ == '__main__':
