@@ -46,8 +46,8 @@ def login():
         password = request.form["password"]
         sql_list = "SELECT Username,Password,ID FROM Users WHERE Username = ?"
         getdb.execute(sql_list, (user,))
-        correct = getdb.fetchall()[0]
-        if len(correct) > 0: 
+        correct = getdb.fetchone()
+        if correct: 
             results = correct[1]
             if check_password_hash(results, password):
                 session['logged_in'] = correct[2]
@@ -86,8 +86,9 @@ def account():
     if request.method == "GET":
         user_id = session["logged_in"]
         getdb = connect_db()
-        cur = getdb.execute('SELECT Task FROM Tasks JOIN Users ON Users.ID = Tasks.UserID WHERE Users.ID = ?', (user_id,))
-        problem = [dict(Task=row[0]) for row in cur.fetchall()]
+        cur = getdb.execute('SELECT Tasks.ID,Tasks.Task,Tasks.UserID FROM Tasks JOIN Users ON Users.ID = Tasks.UserID WHERE Users.ID = ?', (user_id,))
+        problem = [dict(ID=row[0],Task=row[1]) for row in cur.fetchall()]
+        print(problem)
         return render_template('account.html', problem=problem)
     return render_template("account.html")
 
@@ -97,10 +98,22 @@ def add():
         user_id = session["logged_in"]
         new_task = request.form["newtask"]
         getdb = connect_db().cursor()
-        #if new_task == "":
-           #error = "Please enter a valid task!"
+        if new_task == "":
+            flash("Please enter a valid task!")
+            return redirect("/account")
         sql = "INSERT INTO Tasks(Task,UserID) VALUES (?,?)"
         getdb.execute(sql, (new_task,user_id,))
+        connect_db().commit()
+    return redirect("/account")
+
+@app.route('/delete', methods=["POST"])
+def delete():
+    if request.method == "POST":
+        getdb = connect_db().cursor()
+        task = int(request.form["taskid"])
+        print(task)
+        sql = "DELETE FROM Tasks WHERE ID=?"
+        getdb.execute(sql,(task,))    
         connect_db().commit()
     return redirect("/account")
 

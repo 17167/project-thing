@@ -17,20 +17,30 @@
             <input type="text" name="newtask" placeholder="Add a new task!">
             <input type="submit" value="Add Task">
         </form>
-
     {% if error %}
         <p class="error"><strong>Error:</strong> {{ error }}</p>
     {% endif %}
-    </div>
-    <br>
     {% for message in get_flashed_messages() %}
-        {{ message }}
+        <h2><strong>{{ message }}</strong></h3>
     {% endfor %}
-    <h1>Task List</h1>
-    {% for list in problem %}
-    <strong>Task:</strong> {{ list.Task }}
-    <br><br>
-    <input type="text" name
-    {% endfor %}
+    <br>
+    <table>
+        <tr>
+            <th>Task List</th>
+            <th></th>
+        </tr>
+        {% for list in problem %}
+        <tr>
+            <td>{{ list.Task }}</td>
+            <td>
+                <form action="/delete" method="post">
+                <input type="hidden" name="taskid" value="{{ list.ID }}">
+                <input type="submit" value="Delete Task"> 
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    </div>
 </body>
 </html>
