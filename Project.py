@@ -6,10 +6,10 @@ from flask import Flask, render_template, redirect, url_for, request, session, f
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
-import os
+import os                       
  
 app = Flask(__name__)
-app.database = "Users.db"
+app.database = "project.db"
 
 #connects database to webapp
 def connect_db():
@@ -42,21 +42,22 @@ def login():
     error = None
     if request.method == 'POST':
         getdb = connect_db().cursor()
-        user = request.form["username"]
-        password = request.form["password"]
-        sql_list = "SELECT Username,Password,ID FROM Users WHERE Username = ?"
+        user = request.form["username"] #selects username input
+        password = request.form["password"] #selects password input
+        sql_list = "SELECT Username,Password,ID FROM Users WHERE Username = ?" #searches for user/password/ID from database
         getdb.execute(sql_list, (user,))
         correct = getdb.fetchone()
         if correct: 
-            results = correct[1]
+            results = correct[1] #checks if user exists
             if check_password_hash(results, password):
-                session['logged_in'] = correct[2]
+                session['logged_in'] = correct[2] #checks is password relating to user is correct
                 results = correct[0]
                 flash("Welcome to yo task board {}".format(results))
                 return redirect('/account')
         error = "Invalid Credentials. Try Again."
     return render_template('login.html', error=error)
 
+#signup page
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
     if request.method == 'POST':
@@ -73,10 +74,10 @@ def signup():
             error = "Username is taken, please find a new one" #if username is already in db, asks users to input a new one
             return render_template("signup.html", error=error)
         sql = "INSERT INTO Users(Username, Password) VALUES (?,?)" #puts whatever user's username/password is into database
-        getdb.execute(sql,(new_user, generate_password_hash(new_password, "sha256")))
+        getdb.execute(sql,(new_user, generate_password_hash(new_password, "sha256"))) #encrypts users password and stores into database
         connect_db().commit()
         flash("You're all signed up!")
-        return redirect(url_for('login'))
+        return redirect(url_for('login')) #redirects user to login page after signing up
     return render_template('signup.html')
 
 #account page for users to add stuff to their todo list
@@ -85,13 +86,13 @@ def signup():
 def account():
     if request.method == "GET":
         user_id = session["logged_in"]
-        getdb = connect_db()
-        cur = getdb.execute('SELECT Tasks.ID,Tasks.Task,Tasks.UserID FROM Tasks JOIN Users ON Users.ID = Tasks.UserID WHERE Users.ID = ?', (user_id,))
-        problem = [dict(ID=row[0],Task=row[1]) for row in cur.fetchall()]
-        print(problem)
+        getdb = connect_db() #connects to db
+        cur = getdb.execute('SELECT Tasks.ID,Tasks.Task,Tasks.UserID FROM Tasks JOIN Users ON Users.ID = Tasks.UserID WHERE Users.ID = ?', (user_id,)) #selects tasks from specific user
+        problem = [dict(ID=row[0],Task=row[1]) for row in cur.fetchall()] #displays tasks relating to user
         return render_template('account.html', problem=problem)
     return render_template("account.html")
 
+#adding tasks
 @app.route('/addtask', methods=["POST"])
 def add():
     if request.method == "POST":
@@ -99,20 +100,21 @@ def add():
         new_task = request.form["newtask"]
         getdb = connect_db().cursor()
         if new_task == "":
-            flash("Please enter a valid task!")
+            flash("Please enter a valid task!") #ensures task cannot be blank
             return redirect("/account")
-        sql = "INSERT INTO Tasks(Task,UserID) VALUES (?,?)"
+        sql = "INSERT INTO Tasks(Task,UserID) VALUES (?,?)" #inserts new task into db alongside user it is connected to
         getdb.execute(sql, (new_task,user_id,))
         connect_db().commit()
     return redirect("/account")
 
+#deleting tasks
 @app.route('/delete', methods=["POST"])
 def delete():
     if request.method == "POST":
         getdb = connect_db().cursor()
         task = int(request.form["taskid"])
         print(task)
-        sql = "DELETE FROM Tasks WHERE ID=?"
+        sql = "DELETE FROM Tasks WHERE ID=?" #finds the ID related to task user wants to delete
         getdb.execute(sql,(task,))    
         connect_db().commit()
     return redirect("/account")
