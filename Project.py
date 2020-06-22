@@ -25,7 +25,7 @@ def login_required(f):
         if 'logged_in' in session:
             return f(*args, **kwargs)
         else:
-            flash('You need to log in first.')
+            flash('You need to log in first.') #if user is not logged in and tries to access account page, makes it so they HAVE to login first.
             return redirect(url_for('login'))
     return wrap
 
@@ -52,7 +52,7 @@ def login():
             if check_password_hash(results, password):
                 session['logged_in'] = correct[2] #checks is password relating to user is correct
                 results = correct[0]
-                flash("Welcome to yo task board {}".format(results))
+                flash("Welcome to yo task board {}".format(results)) 
                 return redirect('/account')
         error = "Invalid Credentials. Try Again."
     return render_template('login.html', error=error)
@@ -113,7 +113,6 @@ def delete():
     if request.method == "POST":
         getdb = connect_db().cursor()
         task = int(request.form["taskid"])
-        print(task)
         sql = "DELETE FROM Tasks WHERE ID=?" #finds the ID related to task user wants to delete
         getdb.execute(sql,(task,))    
         connect_db().commit()
@@ -123,7 +122,7 @@ def delete():
 @app.route('/logout')
 @login_required
 def logout():
-    session.pop('logged_in', None)
+    session.pop('logged_in', None) #sets user session to none
     flash('You were just logged out!')
     return redirect(url_for('welcome'))
 

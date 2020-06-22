@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{url_for('static',filename='account.css')}}">
     <title>ACCOUNT LOL</title>
 </head>
 <body>
@@ -12,11 +13,12 @@
         <input type='submit' value='Logout'>
     </form>
     <br>
-    <div class=container>
+    <div class="sticky">
         <form action="/addtask" method="POST">
             <input type="text" name="newtask" placeholder="Add a new task!">
             <input type="submit" value="Add Task">
         </form>
+    </div>
     {% if error %}
         <p class="error"><strong>Error:</strong> {{ error }}</p>
     {% endif %}
@@ -42,6 +44,5 @@
         </tr>
         {% endfor %}
     </table>
-    </div>
 </body>
 </html>

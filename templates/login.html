@@ -4,17 +4,19 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="{{url_for('static',filename='login.css')}}">
         <title>Login</title>
     </head>
     <body>
-        <div class="container">
-            <h1>Please Login</h1>
-            <br>
-        <form action="/login" method="POST">
-            <input type="username" name="username" placeholder="Username">
-            <input type="password" name="password" placeholder="Password">
-            <input type="submit" value="Log in">
-        </form>
+        <h1>Please Login</h1>
+        <br>
+        <div class="form">
+            <form class="form" action="/login" method="POST">
+                <input class="userbox" type="username" name="username" placeholder="Username">
+                <input type="password" name="password" placeholder="Password">
+                <input type="submit" value="Log in">
+            </form>
+        </div>
         {% if error %}
             <p class="error"><strong>Error:</strong> {{ error }}</p>
         {% endif %}
@@ -25,6 +27,5 @@
                 {% endfor %}
             {% endif %}
         {% endwith %}
-        </div>
     </body>
 </html>
