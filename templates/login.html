@@ -10,13 +10,17 @@
     <body>
         <h1>Please Login</h1>
         <br>
-        <div class="form">
-            <form class="form" action="/login" method="POST">
-                <input class="userbox" type="username" name="username" placeholder="Username">
-                <input type="password" name="password" placeholder="Password">
-                <input type="submit" value="Log in">
+            <form action="/login" method="POST">
+                <div class="imgcontainer">
+                    <img src="/static/pictures/login.png" alt="login.png" class="avatar">
+                </div>
+
+                <div>
+                    <input type="username" name="username" placeholder="Username">
+                    <input type="password" name="password" placeholder="Password">
+                    <input type="submit" value="Log in">
+                </div>
             </form>
-        </div>
         {% if error %}
             <p class="error"><strong>Error:</strong> {{ error }}</p>
         {% endif %}

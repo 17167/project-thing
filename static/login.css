@@ -1,13 +1,38 @@
 div.form {
     display: block;
     text-align: center;
+    position: relative;
+    border-block-color: blue;
 }
 
 form {
-    display: inline-block;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: left;
+    margin: 0px auto;
+    width: 25%;
+    padding: 12px 20px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.imgcontainer {
+    text-align: center;
+    position: static;
+}
+
+input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: url(pictures/andrew.png), auto;
+    width: auto;
+    height: auto;
+    padding: 5px;
+}
+
+input[type=submit]:hover {
+    opacity: 0.5;
 }
 
 input.userbox {

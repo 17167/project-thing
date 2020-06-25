@@ -87,7 +87,7 @@ def account():
     if request.method == "GET":
         user_id = session["logged_in"]
         getdb = connect_db() #connects to db
-        cur = getdb.execute('SELECT Tasks.ID,Tasks.Task,Tasks.UserID FROM Tasks JOIN Users ON Users.ID = Tasks.UserID WHERE Users.ID = ?', (user_id,)) #selects tasks from specific user
+        cur = getdb.execute('SELECT Tasks.ID,Tasks.Task,Tasks.UserID FROM Tasks JOIN Users ON Users.ID = Tasks.UserID WHERE Users.ID = ?', (user_id,)) #selects tasks user has made
         problem = [dict(ID=row[0],Task=row[1]) for row in cur.fetchall()] #displays tasks relating to user
         return render_template('account.html', problem=problem)
     return render_template("account.html")
