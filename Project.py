@@ -7,7 +7,7 @@ from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 import os                       
- 
+
 app = Flask(__name__)
 app.database = "project.db"
 
@@ -36,7 +36,7 @@ def welcome():
         flash('You were just logged out!')
     return render_template('welcome.html')
 
-#login page
+#login page fo logins
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
@@ -57,7 +57,7 @@ def login():
         error = "Invalid Credentials. Try Again."
     return render_template('login.html', error=error)
 
-#signup page
+#signup page for signup stuff
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
     if request.method == 'POST':
@@ -74,11 +74,11 @@ def signup():
             error = "Username is taken, please find a new one" #if username is already in db, asks users to input a new one
             return render_template("signup.html", error=error)
         sql = "INSERT INTO Users(Username, Password) VALUES (?,?)" #puts whatever user's username/password is into database
-        getdb.execute(sql,(new_user, generate_password_hash(new_password, "sha256"))) #encrypts users password and stores into database
+        getdb.execute(sql,(new_user, generate_password_hash(new_password, "sha256"))) #encrypts users password via sha256 method and stores into database
         connect_db().commit()
+        session["logged_in"] = True
         flash("You're all signed up!")
-        return redirect(url_for('login')) #redirects user to login page after signing up
-    return render_template('signup.html')
+        return redirect(url_for('account')) #redirects user to account page after signing up
 
 #account page for users to add stuff to their todo list
 @app.route('/account', methods=["GET", "POST"])

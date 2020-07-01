@@ -8,15 +8,17 @@
     <title>ACCOUNT LOL</title>
 </head>
 <body>
-    <h1><strong>Work In Progress</strong></h1>
-    <form action='/logout'>
-        <input type='submit' value='Logout'>
-    </form>
+    <h1><strong>Account Page</strong></h1>
+    <div class="logout">
+        <form action='/logout'>
+            <input class="button" type='submit' value='Logout'>
+        </form>
+    </div>
     <br>
     <div class="sticky">
         <form action="/addtask" method="POST">
             <input type="text" name="newtask" placeholder="Add a new task!">
-            <input type="submit" value="Add Task">
+            <input class="newtask" type="submit" value="Add Task">
         </form>
     </div>
     {% if error %}
@@ -25,10 +27,9 @@
     {% for message in get_flashed_messages() %}
         <h2><strong>{{ message }}</strong></h3>
     {% endfor %}
-    <br>
-    <table>
+    <table class="center">
         <tr>
-            <th>Task List</th>
+            <th class="tasklist">Task List</th>
             <th></th>
         </tr>
         <br>
@@ -38,7 +39,7 @@
             <td>
                 <form action="/delete" method="post">
                 <input type="hidden" name="taskid" value="{{ list.ID }}">
-                <input type="submit" value="Delete Task"> 
+                <input class="newtask" type="submit" value="Delete Task"> 
                 </form>
             </td>
         </tr>

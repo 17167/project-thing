@@ -5,4 +5,57 @@ div.sticky {
     background-color: white;
     top: 0;
     font-size: 20px;
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    font-size: 3vw;
+}
+
+div.logout {
+    text-align: center;
+}
+
+input.button {
+    background-color: hotpink;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: auto;
+    height: auto;
+    padding: 5px;
+}
+
+input.newtask {
+    background-color: hotpink;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: auto;
+    height: auto;
+    padding: 5px;
+    opacity: 0.8;
+}
+
+th.tasklist {
+    font-size: 3vw;
+    text-align: center;
+}
+
+table.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+input[type=submit]:hover {
+    opacity: 0.8;
+}
+
+h2 {
+    text-align: center;
 }
