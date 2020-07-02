@@ -1,3 +1,14 @@
+:root {
+    --text:Red;
+    --shadow: black;
+}
+
+.playful {
+    color: var(--text);
+    text-shadow: 
+      6px 6px  var(--shadow);
+}
+
 div.form {
     display: block;
     text-align: center;
@@ -42,4 +53,9 @@ input.userbox {
 h1 {
     text-align: center;
     font-size: 345%;
+}
+
+p {
+    text-align: center;
+    font-size: 200%;
 }

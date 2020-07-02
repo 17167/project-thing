@@ -11,6 +11,7 @@
 
 h1.a {
     font-size: 345%;
+    text-align: center;
 }
 
 #body {
@@ -29,3 +30,6 @@ input[type=submit] {
     cursor: url(pictures/andrew.png), auto;
 }
 
+div.centering {
+    text-align: center;
+}

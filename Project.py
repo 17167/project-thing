@@ -77,8 +77,9 @@ def signup():
         getdb.execute(sql,(new_user, generate_password_hash(new_password, "sha256"))) #encrypts users password via sha256 method and stores into database
         connect_db().commit()
         session["logged_in"] = True
-        flash("You're all signed up!")
+        flash("Thanks for signing up cus")
         return redirect(url_for('account')) #redirects user to account page after signing up
+    return render_template("signup.html")
 
 #account page for users to add stuff to their todo list
 @app.route('/account', methods=["GET", "POST"])

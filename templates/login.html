@@ -10,19 +10,19 @@
     <body>
         <h1>Please Login</h1>
         <br>
-            <form action="/login" method="POST">
-                <div class="imgcontainer">
-                    <img src="/static/pictures/login.png" alt="login.png" class="avatar">
-                </div>
+        <form action="/login" method="POST">
+            <div class="imgcontainer">
+                <img src="/static/pictures/login.png" alt="login.png" class="avatar">
+            </div>
 
-                <div>
-                    <input type="username" name="username" placeholder="Username">
-                    <input type="password" name="password" placeholder="Password">
-                    <input type="submit" value="Log in">
-                </div>
-            </form>
+            <div>
+                <input type="username" name="username" placeholder="Username">
+                <input type="password" name="password" placeholder="Password">
+                <input type="submit" value="Log in">
+            </div>
+        </form>
         {% if error %}
-            <p class="error"><strong>Error:</strong> {{ error }}</p>
+            <p class="playful"><strong>Error:</strong> {{ error }}</p>
         {% endif %}
         {% with messages = get_flashed_messages() %}
             {% if messages %}

@@ -9,6 +9,7 @@
 </head>
 <body>
     <h1 class="playful a">Home</h1>
+    <div class="centering">
     <form action='/login'>
         <input type='submit' value='Click here to login'>
     </form>
@@ -16,6 +17,7 @@
     <form action='/signup'>
         <input type='submit' value='Click here to signup'>
     </form>
+    </div>
     <br>
     {% for message in get_flashed_messages() %}
     {{ message }}

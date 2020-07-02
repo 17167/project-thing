@@ -4,20 +4,26 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="{{url_for('static',filename='signup.css')}}">
         <title>Signup Page</title>
     </head>
     <body>
-        <div class="container">
-            <h1>Signup Page</h1>
-            <br>
+        <h1>Signup Page</h1>
+        <br>
         <form action="/signup" method="POST">
-            <input type="username" name="newuser" placeholder="Username">
-            <input type="password" name="newpassword" placeholder="Password">
-            <input type="submit" value="Signup">
+            <div class="imgcontainer">
+                <img src="/static/pictures/bonk.jpg" alt="uwu" class="uwubruh">
+            </div>
+
+            <div>
+                <input type="username" name="newuser" placeholder="Username">
+                <input type="password" name="newpassword" placeholder="Password">
+                <input type="submit" value="Signup">
+            </div>
         </form>
         <br>
         {% if error %}
-        <p class="error"><strong>Error:</strong> {{ error }}</p>
+        <strong>Error:</strong> {{ error }}
         {% endif %}
         <br>
         <form action="/">
