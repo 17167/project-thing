@@ -1,9 +1,9 @@
-:root {
+#:root {
     --text:Red;
     --shadow: black;
 }
 
-.playful {
+#.playful {
     color: var(--text);
     text-shadow: 
       6px 6px  var(--shadow);
@@ -31,7 +31,7 @@ form {
 }
 
 input[type=submit] {
-    background-color: #4CAF50;
+    background-color: black;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;

@@ -54,7 +54,7 @@ def login():
                 results = correct[0]
                 flash("Welcome to yo task board {}".format(results)) 
                 return redirect('/account')
-        error = "Invalid Credentials. Try Again."
+        error = "Invalid Credentials. Try Again." #if user credentials are wrong or does not exit, returns error
     return render_template('login.html', error=error)
 
 #signup page for signup stuff
@@ -75,10 +75,8 @@ def signup():
             return render_template("signup.html", error=error)
         sql = "INSERT INTO Users(Username, Password) VALUES (?,?)" #puts whatever user's username/password is into database
         getdb.execute(sql,(new_user, generate_password_hash(new_password, "sha256"))) #encrypts users password via sha256 method and stores into database
-        connect_db().commit()
-        session["logged_in"] = True
-        flash("Thanks for signing up cus")
-        return redirect(url_for('account')) #redirects user to account page after signing up
+        connect_db().commit()  #redirects user to account page after signing up
+        return redirect(url_for("welcome"))
     return render_template("signup.html")
 
 #account page for users to add stuff to their todo list
@@ -100,12 +98,12 @@ def add():
         user_id = session["logged_in"]
         new_task = request.form["newtask"]
         getdb = connect_db().cursor()
-        if new_task == "":
-            flash("Please enter a valid task!") #ensures task cannot be blank
+        if len(new_task) > 100 or len(new_task) == 0: #ensures task cannot be blank or too big
+            flash("Please enter a valid task!") 
             return redirect("/account")
         sql = "INSERT INTO Tasks(Task,UserID) VALUES (?,?)" #inserts new task into db alongside user it is connected to
         getdb.execute(sql, (new_task,user_id,))
-        connect_db().commit()
+        connect_db().commit() #commits changes
     return redirect("/account")
 
 #deleting tasks

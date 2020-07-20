@@ -1,13 +1,13 @@
-:root {
+#:root {
     --text:Red;
     --shadow: black;
 }
 
-.playful {
+#.playful {
     color: var(--text);
     text-shadow: 
       6px 6px  var(--shadow);
-  }
+}
 
 h1.a {
     font-size: 345%;
@@ -20,7 +20,7 @@ h1.a {
 }
 
 input[type=submit] {
-    background-image: url(pictures/andrew.PNG);
+    background-color: black;
     width: 270px; height: 75px;
     border: none;
     color: white;
@@ -33,3 +33,4 @@ input[type=submit] {
 div.centering {
     text-align: center;
 }
+
