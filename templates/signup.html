@@ -12,7 +12,7 @@
         <br>
         <form action="/signup" method="POST">
             <div class="imgcontainer">
-                <img src="/static/pictures/bonk.jpg" alt="uwu" class="uwubruh">
+                <img src="/static/pictures/signup.PNG" alt="uwu" class="uwubruh">
             </div>
 
             <div>
@@ -21,11 +21,9 @@
                 <input type="submit" value="Signup">
             </div>
         </form>
-        <br>
         {% if error %}
-        <strong>Error:</strong> {{ error }}
+        <p><strong>Error:</strong> {{ error }}</p>
         {% endif %}
-        <br>
         <form action="/">
             <input type="submit" value="Back to the Home Page">
         </form>

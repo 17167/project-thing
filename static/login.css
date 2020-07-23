@@ -36,7 +36,7 @@ input[type=submit] {
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
-    cursor: url(pictures/andrew.png), auto;
+    cursor: pointer;
     width: auto;
     height: auto;
     padding: 5px;

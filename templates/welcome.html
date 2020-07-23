@@ -19,9 +19,9 @@
     </form>
     </div>
     <br>
-    <div class="centering">
+    <div class="flashing">
         {% for message in get_flashed_messages() %}
-        {{ message }}
+        <p><strong>{{ message }}</strong></p>
         {% endfor %}
     </div>
 </body>
