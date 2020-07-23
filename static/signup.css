@@ -22,6 +22,7 @@ input[type=submit] {
     width: auto;
     height: auto;
     padding: 5px;
+    border-radius: 4px;
 }
 
 form {

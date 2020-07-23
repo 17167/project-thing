@@ -1,12 +1,12 @@
-#:root {
-    --text:Red;
-    --shadow: black;
+.Site {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    overflow: hidden;
 }
 
-#.playful {
-    color: var(--text);
-    text-shadow: 
-      6px 6px  var(--shadow);
+.Site-content {
+    flex: 1;
 }
 
 h1.a {
@@ -14,8 +14,8 @@ h1.a {
     text-align: center;
 }
 
-#body {
-    background-image: url(pictures/toomuchtodo.png);
+body {
+    background-color: darkgrey;
     background-size: 100%;
 }
 
@@ -28,6 +28,7 @@ input[type=submit] {
     text-decoration: none;
     margin: 4px 2px;
     cursor: pointer;
+    border-radius: 4px;
 }
 
 div.centering {

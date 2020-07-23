@@ -7,22 +7,26 @@
     <link rel="stylesheet" href="{{url_for('static',filename='welcome.css')}}">
     <title>Welcome!</title>
 </head>
-<body>
-    <h1 class="playful a">Home</h1>
-    <div class="centering">
-    <form action='/login'>
-        <input type='submit' value='Click here to login'>
-    </form>
-    <br>
-    <form action='/signup'>
-        <input type='submit' value='Click here to signup'>
-    </form>
-    </div>
-    <br>
-    <div class="flashing">
-        {% for message in get_flashed_messages() %}
-        <p><strong>{{ message }}</strong></p>
-        {% endfor %}
-    </div>
+<body class="Site">
+    <main class='Site-content'>
+        <h1 class="playful a">Home</h1>
+        <div class="centering">
+        <form action='/login'>
+            <input type='submit' value='Click here to login'>
+        </form>
+        <form action='/signup'>
+            <input type='submit' value='Click here to signup'>
+        </form>
+        </div>
+        <br>
+        <div class="flashing">
+            {% for message in get_flashed_messages() %}
+            <p><strong>{{ message }}</strong></p>
+            {% endfor %}
+        </div>
+    </main>
+        <footer>
+            <p>© 2020 Jayden Ling</p>
+        </footer>
 </body>
 </html>

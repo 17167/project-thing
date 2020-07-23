@@ -32,8 +32,6 @@ def login_required(f):
 #welcome/home page
 @app.route('/', methods=['GET', 'POST'])
 def welcome():
-    if request.method == 'POST':
-        flash('You were just logged out!')
     return render_template('welcome.html')
 
 #login page fo logins
@@ -76,7 +74,8 @@ def signup():
         sql = "INSERT INTO Users(Username, Password) VALUES (?,?)" #puts whatever user's username/password is into database
         getdb.execute(sql,(new_user, generate_password_hash(new_password, "sha256"))) #encrypts users password via sha256 method and stores into database
         connect_db().commit()  #redirects user to account page after signing up
-        return redirect(url_for("welcome"))
+        flash("Thanks for signing up!")
+        return redirect(url_for("login"))
     return render_template("signup.html")
 
 #account page for users to add stuff to their todo list
@@ -98,7 +97,10 @@ def add():
         user_id = session["logged_in"]
         new_task = request.form["newtask"]
         getdb = connect_db().cursor()
-        if len(new_task) > 100 or len(new_task) == 0: #ensures task cannot be blank or too big
+        if len(new_task) > 100: #ensures task cannot be too big
+            flash("Please enter a shorter task!") 
+            return redirect("/account")
+        if new_task == "" or new_task.isspace(): #ensures task cannot be empty or blank spaces
             flash("Please enter a valid task!") 
             return redirect("/account")
         sql = "INSERT INTO Tasks(Task,UserID) VALUES (?,?)" #inserts new task into db alongside user it is connected to
@@ -121,7 +123,7 @@ def delete():
 @app.route('/logout')
 @login_required
 def logout():
-    session.pop('logged_in', None) #sets user session to none
+    session.pop('logged_in', None) #sets user session to none, effectively logging out user
     flash('You were just logged out!')
     return redirect(url_for('welcome'))
 

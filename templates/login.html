@@ -10,26 +10,24 @@
     <body>
         <h1>Please Login</h1>
         <br>
-        <form action="/login" method="POST">
+        <form action="/login" method="POST" class="main">
             <div class="imgcontainer">
                 <img src="/static/pictures/login.png" alt="login.png" class="avatar">
-            </div>
-
-            <div>
-                <input type="username" name="username" placeholder="Username">
-                <input type="password" name="password" placeholder="Password">
-                <input type="submit" value="Log in">
-            </div>
-        </form>
-        {% if error %}
+            </div> 
+            <input type="username" name="username" placeholder="Username">
+            <input type="password" name="password" placeholder="Password">
+            <input type="submit" value="Log in">
+            {% if error %}
             <p class="playful"><strong>Error:</strong> {{ error }}</p>
-        {% endif %}
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    <p><strong>{{ message }}</strong></p>
-                {% endfor %}
             {% endif %}
-        {% endwith %}
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p><strong>{{ message }}</strong></p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <input formaction="/" type="submit" value="Back to the Home Page">
+        </form>
     </body>
 </html>
