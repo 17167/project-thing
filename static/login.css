@@ -1,3 +1,19 @@
+.Site {
+    display: flex;
+    min-height: 90vh;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.Site-content {
+    flex: 1;
+}
+
+footer {
+    bottom: 0px;
+    position: fixed;
+}
+
 #:root {
     --text:Red;
     --shadow: black;
