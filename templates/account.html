@@ -7,43 +7,48 @@
     <link rel="stylesheet" href="{{url_for('static',filename='account.css')}}">
     <title>Account Page</title>
 </head>
-<body>
-    <h1><strong>Task Board</strong></h1>
-    <div class="logout">
-        <form action='/logout'>
-            <input class="button" type='submit' value='Logout'>
-        </form>
-    </div>
-    <br>
-    <div class="sticky">
-        <form action="/addtask" method="POST">
-            <input type="text" name="newtask" placeholder="Add a new task!">
-            <input class="newtask" type="submit" value="Add Task">
-        </form>
-    </div>
-    {% if error %}
-        <p class="error"><strong>Error:</strong> {{ error }}</p>
-    {% endif %}
-    {% for message in get_flashed_messages() %}
-        <h2><strong>{{ message }}</strong></h3>
-    {% endfor %}
-    <table class="center">
-        <tr>
-            <th class="tasklist">Task List</th>
-            <th></th>
-        </tr>
+<body class="Site">
+    <main class="Site-content">
+        <h1><strong>Task Board</strong></h1>
+        <div class="logout">
+            <form action='/logout'>
+                <input class="button" type='submit' value='Logout'>
+            </form>
+        </div>
         <br>
-        {% for list in problem %}
-        <tr>
-            <td>{{ list.Task }}</td>
-            <td>
-                <form action="/delete" method="post">
-                <input type="hidden" name="taskid" value="{{ list.ID }}">
-                <input class="newtask" type="submit" value="Delete Task"> 
-                </form>
-            </td>
-        </tr>
+        <div class="sticky">
+            <form action="/addtask" method="POST">
+                <input type="text" name="newtask" placeholder="Add a new task!">
+                <input class="newtask" type="submit" value="Add Task">
+            </form>
+        </div>
+        {% if error %}
+            <p class="error"><strong>Error:</strong> {{ error }}</p>
+        {% endif %}
+        {% for message in get_flashed_messages() %}
+            <h2><strong>{{ message }}</strong></h3>
         {% endfor %}
-    </table>
+        <table class="center">
+            <tr>
+                <th class="tasklist">Task List</th>
+                <th></th>
+            </tr>
+            <br>
+            {% for list in problem %}
+            <tr>
+                <td>{{ list.Task }}</td>
+                <td>
+                    <form action="/delete" method="post">
+                    <input type="hidden" name="taskid" value="{{ list.ID }}">
+                    <input class="newtask" type="submit" value="Delete Task"> 
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </main>
+        <footer>
+            <p>© 2020 Jayden Ling</p>
+        </footer>
 </body>
 </html>

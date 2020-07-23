@@ -14,16 +14,17 @@ footer {
     position: fixed;
 }
 
-#:root {
+/*:root {
     --text:Red;
     --shadow: black;
 }
 
-#.playful {
+.playful {
     color: var(--text);
     text-shadow: 
       6px 6px  var(--shadow);
 }
+*/
 
 div.form {
     display: block;
@@ -72,7 +73,7 @@ h1 {
     font-size: 345%;
 }
 
-p {
+p.flashed {
     text-align: center;
     font-size: 200%;
 }

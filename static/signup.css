@@ -1,3 +1,19 @@
+.Site {
+    display: flex;
+    min-height: 90vh;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.Site-content {
+    flex: 1;
+}
+
+footer {
+    bottom: 0px;
+    position: fixed;
+}
+
 div.container {
     text-align: center;
     display: block;
@@ -38,7 +54,7 @@ h1 {
     text-align: center;
     font-size: 345%;
 }
-p {
+p.error {
     text-align: center;
     font-size: 200%;
 }

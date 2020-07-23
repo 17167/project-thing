@@ -7,27 +7,32 @@
         <link rel="stylesheet" href="{{url_for('static',filename='login.css')}}">
         <title>Login Page</title>
     </head>
-    <body>
-        <h1>Please Login</h1>
-        <br>
-        <form action="/login" method="POST" class="main">
-            <div class="imgcontainer">
-                <img src="/static/pictures/login.png" alt="login.png" class="avatar">
-            </div> 
-            <input type="username" name="username" placeholder="Username">
-            <input type="password" name="password" placeholder="Password">
-            <input type="submit" value="Log in">
-            {% if error %}
-            <p class="playful"><strong>Error:</strong> {{ error }}</p>
-            {% endif %}
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    {% for message in messages %}
-                        <p><strong>{{ message }}</strong></p>
-                    {% endfor %}
+    <body class="Site">
+        <main class="Site-content">
+            <h1>Please Login</h1>
+            <br>
+            <form action="/login" method="POST" class="main">
+                <div class="imgcontainer">
+                    <img src="/static/pictures/login.png" alt="login.png" class="avatar">
+                </div> 
+                <input type="username" name="username" placeholder="Username">
+                <input type="password" name="password" placeholder="Password">
+                <input type="submit" value="Log in">
+                {% if error %}
+                <p class="flashed"><strong>Error:</strong> {{ error }}</p>
                 {% endif %}
-            {% endwith %}
-            <input formaction="/" type="submit" value="Back to the Home Page">
-        </form>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p><strong>{{ message }}</strong></p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <input formaction="/" type="submit" value="Back to the Home Page">
+            </form>
+        </main>
+            <footer>
+                <p>© 2020 Jayden Ling</p>
+            </footer>
     </body>
 </html>

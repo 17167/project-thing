@@ -1,12 +1,16 @@
 .Site {
     display: flex;
-    min-height: 100vh;
+    min-height: 90vh;
     flex-direction: column;
-    overflow: hidden;
 }
 
 .Site-content {
     flex: 1;
+}
+
+footer {
+    position: fixed;
+    bottom: 0px;
 }
 
 h1.a {
@@ -15,7 +19,7 @@ h1.a {
 }
 
 body {
-    background-color: darkgrey;
+    background-color: white;
     background-size: 100%;
 }
 
