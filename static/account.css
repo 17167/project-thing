@@ -2,6 +2,10 @@ html {
     overflow: auto;
 }
 
+input[type=checkbox]:checked + label.strikethrough{
+    text-decoration:line-through;
+}
+
 .Site {
     display: flex;
     min-height: 90vh;

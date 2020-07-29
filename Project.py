@@ -50,8 +50,8 @@ def login():
             if check_password_hash(results, password):
                 session['logged_in'] = correct[2] #checks is password relating to user is correct
                 results = correct[0]
-                flash("Welcome to yo task board {}".format(results)) 
-                return redirect('/account')
+                flash("Welcome to yo task board {}".format(results))
+                return redirect('/account') #redirects to account page
         error = "Invalid Credentials. Try Again." #if user credentials are wrong or does not exit, returns error
     return render_template('login.html', error=error)
 
@@ -66,7 +66,7 @@ def signup():
         if new_user == "" or new_password == "": #ensures username/password cannot be blank 
             error = "Enter a valid username or password please"
             return render_template("signup.html", error=error)
-        sql = "SELECT Username FROM Users where Username = ?"
+        sql = "SELECT Username FROM Users where Username = ?" #sees if requested username is in db already
         getdb.execute(sql, (new_user,))
         if bool(getdb.fetchall()):
             error = "Username is taken, please find a new one" #if username is already in db, asks users to input a new one
@@ -74,8 +74,8 @@ def signup():
         sql = "INSERT INTO Users(Username, Password) VALUES (?,?)" #puts whatever user's username/password is into database
         getdb.execute(sql,(new_user, generate_password_hash(new_password, "sha256"))) #encrypts users password via sha256 method and stores into database
         connect_db().commit()  #redirects user to account page after signing up
-        flash("Thanks for signing up!")
-        return redirect(url_for("login"))
+        flash("Thanks for signing up!") #flashes user friendly message
+        return redirect(url_for("login")) #directs them to login screen for quick access
     return render_template("signup.html")
 
 #account page for users to add stuff to their todo list
@@ -85,8 +85,8 @@ def account():
     if request.method == "GET":
         user_id = session["logged_in"]
         getdb = connect_db() #connects to db
-        cur = getdb.execute('SELECT Tasks.ID,Tasks.Task,Tasks.UserID FROM Tasks JOIN Users ON Users.ID = Tasks.UserID WHERE Users.ID = ?', (user_id,)) #selects tasks user has made
-        problem = [dict(ID=row[0],Task=row[1]) for row in cur.fetchall()] #displays tasks relating to user
+        cur = getdb.execute('SELECT Tasks.ID,Tasks.Task,Tasks.UserID, Tasks.Completed FROM Tasks JOIN Users ON Users.ID = Tasks.UserID WHERE Users.ID = ?', (user_id,)) #selects tasks user has made
+        problem = [dict(ID=row[0],Task=row[1], complete=row[3]) for row in cur.fetchall()] #displays tasks relating to user
         return render_template('account.html', problem=problem)
     return render_template("account.html")
 
@@ -110,6 +110,7 @@ def add():
 
 #deleting tasks
 @app.route('/delete', methods=["POST"])
+@login_required
 def delete():
     if request.method == "POST":
         getdb = connect_db().cursor()
@@ -118,6 +119,12 @@ def delete():
         getdb.execute(sql,(task,))    
         connect_db().commit()
     return redirect("/account")
+
+@app.route('/settings')
+@login_required
+def settings():
+    user_id = session["logged_in"]
+    return render_template("settings.html")
 
 #logs user out, redirects them to welcome/home page
 @app.route('/logout')

@@ -11,8 +11,8 @@
     <main class="Site-content">
         <h1><strong>Task Board</strong></h1>
         <div class="logout">
-            <form action='/logout'>
-                <input class="button" type='submit' value='Logout'>
+            <form action='/settings'>
+                <input class="button" type='submit' value='Settings'>
             </form>
         </div>
         <br>
@@ -36,7 +36,19 @@
             <br>
             {% for list in problem %}
             <tr>
-                <td>{{ list.Task }}</td>
+                <td>
+                    {% if list.complete == 1 %}
+                    <form>
+                        <input type="checkbox" id="bruh" name="tasknumber" value="{{ list.Task }}" checked>
+                        <label for="tasknumber">{{ list.Task }}</label>
+                    </form>
+                    {% else %}
+                    <form>
+                        <input type="checkbox" id="bruh" name="tasknumber" value="{{ list.Task }}">
+                        <label for="tasknumber">{{ list.Task }}</label>
+                    </form>
+                    {% endif %}
+                </td>
                 <td>
                     <form action="/delete" method="post">
                     <input type="hidden" name="taskid" value="{{ list.ID }}">
