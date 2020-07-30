@@ -108,6 +108,16 @@ def add():
         connect_db().commit() #commits changes
     return redirect("/account")
 
+@app.route('/checkTask', methods=["POST"])
+def check_task():
+    if request.method == "POST":
+        getdb = connect_db().cursor()
+        task = int(request.form["taskid"])
+        sql = "UPDATE Tasks SET Completed = 1 WHERE ID = ?" #when checkbox has been clicked, strikes through task
+        getdb.execute(sql,(task,))    
+        connect_db().commit()
+    return redirect('/account')
+
 #deleting tasks
 @app.route('/delete', methods=["POST"])
 @login_required

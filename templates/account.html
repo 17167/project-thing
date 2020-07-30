@@ -37,17 +37,11 @@
             {% for list in problem %}
             <tr>
                 <td>
-                    {% if list.complete == 1 %}
-                    <form>
-                        <input type="checkbox" id="bruh" name="tasknumber" value="{{ list.Task }}" checked>
-                        <label for="tasknumber">{{ list.Task }}</label>
+                    <form method="POST" action="/checkTask">
+                        <input type="hidden" value="{{ list.ID }}" name="taskid">
+                        <input type="checkbox" id="checkbox-{{ list.ID }}" name="complete" {% if list.complete %}checked{% endif %} onchange="this.form.submit()">
+                        <label class="strikethrough" for="checkbox-{{ list.ID }}">{{ list.Task }}</label>
                     </form>
-                    {% else %}
-                    <form>
-                        <input type="checkbox" id="bruh" name="tasknumber" value="{{ list.Task }}">
-                        <label for="tasknumber">{{ list.Task }}</label>
-                    </form>
-                    {% endif %}
                 </td>
                 <td>
                     <form action="/delete" method="post">
