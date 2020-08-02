@@ -1,0 +1,11 @@
+input[type=submit].serif {
+    background-color: black;
+    color: white;
+    padding: 5px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: auto;
+    height: auto;
+    border-radius: 4px;
+}

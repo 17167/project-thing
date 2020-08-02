@@ -50,7 +50,7 @@ def login():
             if check_password_hash(results, password):
                 session['logged_in'] = correct[2] #checks is password relating to user is correct
                 results = correct[0]
-                flash("Welcome to yo task board {}".format(results))
+                flash("Welcome to your task board {}!".format(results))
                 return redirect('/account') #redirects to account page
         error = "Invalid Credentials. Try Again." #if user credentials are wrong or does not exit, returns error
     return render_template('login.html', error=error)
@@ -83,7 +83,7 @@ def signup():
 @login_required
 def account():
     if request.method == "GET":
-        user_id = session["logged_in"]
+        user_id = session["logged_in"] 
         getdb = connect_db() #connects to db
         cur = getdb.execute('SELECT Tasks.ID,Tasks.Task,Tasks.UserID, Tasks.Completed FROM Tasks JOIN Users ON Users.ID = Tasks.UserID WHERE Users.ID = ?', (user_id,)) #selects tasks user has made
         problem = [dict(ID=row[0],Task=row[1], complete=row[3]) for row in cur.fetchall()] #displays tasks relating to user
@@ -108,6 +108,7 @@ def add():
         connect_db().commit() #commits changes
     return redirect("/account")
 
+#when clicked checkboxes
 @app.route('/checkTask', methods=["POST"])
 def check_task():
     if request.method == "POST":
@@ -130,6 +131,7 @@ def delete():
         connect_db().commit()
     return redirect("/account")
 
+#settings page, won't have much functions yet.
 @app.route('/settings')
 @login_required
 def settings():

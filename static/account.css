@@ -44,13 +44,12 @@ div.logout {
 input.button {
     background-color: black;
     color: white;
-    padding: 14px 20px;
+    padding: 5px;
     margin: 8px 0;
     border: none;
     cursor: pointer;
     width: auto;
     height: auto;
-    padding: 5px;
     border-radius: 4px;
 }
 
