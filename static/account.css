@@ -70,11 +70,12 @@ input.newtask {
 th.tasklist {
     font-size: 3vw;
     text-align: center;
+    position: relative;
 }
 
 table.center {
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0px auto;
+    width: 50%;
 }
 
 input[type=submit]:hover {
@@ -83,4 +84,15 @@ input[type=submit]:hover {
 
 h2 {
     text-align: center;
+}
+
+td.cell {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #dddddd;
+}
+
+th {
+    text-align: center;
+    padding: 25px;
 }

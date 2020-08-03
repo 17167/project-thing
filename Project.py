@@ -114,7 +114,7 @@ def check_task():
     if request.method == "POST":
         getdb = connect_db().cursor()
         task = int(request.form["taskid"])
-        sql = "UPDATE Tasks SET Completed = 1 WHERE ID = ?" #when checkbox has been clicked, strikes through task
+        sql = "UPDATE Tasks SET Completed = 1-Completed WHERE ID = ?" #when checkbox has been clicked, strikes through task
         getdb.execute(sql,(task,))    
         connect_db().commit()
     return redirect('/account')

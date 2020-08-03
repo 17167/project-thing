@@ -26,17 +26,16 @@
             <p class="error"><strong>Error:</strong> {{ error }}</p>
         {% endif %}
         {% for message in get_flashed_messages() %}
-            <h2><strong>{{ message }}</strong></h3>
+            <h2><strong>{{ message }}</strong></h2>
         {% endfor %}
         <table class="center">
             <tr>
                 <th class="tasklist">Task List</th>
-                <th></th>
+                <th>Delete Task</th>
             </tr>
-            <br>
             {% for list in problem %}
             <tr>
-                <td>
+                <td class="cell">
                     <form method="POST" action="/checkTask">
                         <input type="hidden" value="{{ list.ID }}" name="taskid">
                         <input type="checkbox" id="checkbox-{{ list.ID }}" name="complete" {% if list.complete %}checked{% endif %} onchange="this.form.submit()">
@@ -48,7 +47,7 @@
                     <input type="hidden" name="taskid" value="{{ list.ID }}">
                     <input class="newtask" type="submit" value="Delete Task"> 
                     </form>
-                </td>
+                </td> 
             </tr>
             {% endfor %}
         </table>
