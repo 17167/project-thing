@@ -97,7 +97,7 @@ def add():
         user_id = session["logged_in"]
         new_task = request.form["newtask"]
         getdb = connect_db().cursor()
-        if len(new_task) > 100: #ensures task cannot be too big
+        if len(new_task) > 50: #ensures task cannot be massive
             flash("Please enter a shorter task!") 
             return redirect("/account")
         if new_task == "" or new_task.isspace(): #ensures task cannot be empty or blank spaces
@@ -135,15 +135,14 @@ def delete():
 @app.route('/settings')
 @login_required
 def settings():
-    user_id = session["logged_in"]
-    return render_template("settings.html")
+    return render_template("settings.html") #settings page, literally has 1 function as of yet, might add some more i dunno yet
 
 #logs user out, redirects them to welcome/home page
 @app.route('/logout')
 @login_required
 def logout():
     session.pop('logged_in', None) #sets user session to none, effectively logging out user
-    flash('You were just logged out!')
+    flash('Thanks for using my website!') #friendly message thing
     return redirect(url_for('welcome'))
 
 #incase of error, enters debugging mode

@@ -18,7 +18,7 @@
         <br>
         <div class="sticky">
             <form action="/addtask" method="POST">
-                <input type="text" name="newtask" placeholder="Add a new task!">
+                <input type="text" name="newtask" placeholder="Max 50 characters!">
                 <input class="newtask" type="submit" value="Add Task">
             </form>
         </div>
@@ -30,15 +30,14 @@
         {% endfor %}
         <table class="center">
             <tr>
-                <th class="tasklist">Task List</th>
-                <th>Delete Task</th>
+                <th>Task List</th>
             </tr>
             {% for list in problem %}
             <tr>
-                <td class="cell">
+                <td>
                     <form method="POST" action="/checkTask">
                         <input type="hidden" value="{{ list.ID }}" name="taskid">
-                        <input type="checkbox" id="checkbox-{{ list.ID }}" name="complete" {% if list.complete %}checked{% endif %} onchange="this.form.submit()">
+                        <input type="checkbox" id="checkbox-{{ list.ID }}" name="complete" {% if list.complete %}checked{% endif %} onchange="this.form.submit()"> <!--When checkbox is clicked, change the value or task the-->
                         <label class="strikethrough" for="checkbox-{{ list.ID }}">{{ list.Task }}</label>
                     </form>
                 </td>
@@ -47,7 +46,7 @@
                     <input type="hidden" name="taskid" value="{{ list.ID }}">
                     <input class="newtask" type="submit" value="Delete Task"> 
                     </form>
-                </td> 
+                </td>
             </tr>
             {% endfor %}
         </table>

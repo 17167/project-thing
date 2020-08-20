@@ -67,15 +67,17 @@ input.newtask {
     border-radius: 4px;
 }
 
-th.tasklist {
-    font-size: 3vw;
-    text-align: center;
-    position: relative;
+th {
+    border: 1px solid;
+    font-size: 2vw;
+    text-align: left;
+    width: 50%;
 }
 
 table.center {
     margin: 0px auto;
     width: 50%;
+    border-collapse: collapse;
 }
 
 input[type=submit]:hover {
@@ -86,13 +88,14 @@ h2 {
     text-align: center;
 }
 
-td.cell {
-    width: 100%;
-    text-align: center;
+td {
+    height: 100%;
+    width: inherit;
+    text-align: left;
     border-bottom: 1px solid #dddddd;
 }
 
-th {
-    text-align: center;
-    padding: 25px;
+::selection {
+    color: #ffffff;
+    background: black;
 }
