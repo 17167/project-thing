@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+
+html {
+    overflow: auto;
+    font-family: 'Raleway', sans-serif;
+}
+
 .Site {
     display: flex;
     min-height: 90vh;
@@ -33,6 +40,7 @@ input[type=submit] {
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 4px;
+    font-family: 'Raleway', sans-serif;
 }
 
 div.centering {
