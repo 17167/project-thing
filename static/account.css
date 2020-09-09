@@ -38,22 +38,24 @@ div.sticky {
 h1 {
     text-align: center;
     font-size: 3vw;
+    margin: 27px 0px 0px 0px;
 }
 
 div.logout {
-    text-align: center;
+    text-align: right;
+    margin-top: -60px;
 }
 
 input.button {
     background-color: black;
     color: white;
     padding: 5px;
-    margin: 8px 0;
     border: none;
     cursor: pointer;
     width: auto;
     height: auto;
     border-radius: 4px;
+    font-family: 'Raleway', sans-serif;
 }
 
 input.newtask {
@@ -68,6 +70,7 @@ input.newtask {
     padding: 5px;
     opacity: 0.8;
     border-radius: 4px;
+    font-family: 'Raleway', sans-serif;
 }
 
 th {

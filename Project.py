@@ -131,12 +131,6 @@ def delete():
         connect_db().commit()
     return redirect("/account")
 
-#settings page, won't have much functions yet.
-@app.route('/settings')
-@login_required
-def settings():
-    return render_template("settings.html") #settings page, literally has 1 function as of yet, might add some more i dunno yet
-
 #logs user out, redirects them to welcome/home page
 @app.route('/logout')
 @login_required
