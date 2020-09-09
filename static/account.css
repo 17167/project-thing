@@ -78,7 +78,7 @@ th {
 
 table.center {
     margin: 0px auto;
-    width: 50%;
+    width: 40%;
     border-collapse: collapse;
 }
 
@@ -90,11 +90,13 @@ h2 {
     text-align: center;
 }
 
-td {
+td.bruh {
     height: 100%;
     width: 100%;
     text-align: left;
     border-bottom: 1px solid #dddddd;
+    overflow-wrap: anywhere;
+    padding: 10px;
 }
 
 ::selection {

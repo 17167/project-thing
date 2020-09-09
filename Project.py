@@ -97,7 +97,7 @@ def add():
         user_id = session["logged_in"]
         new_task = request.form["newtask"]
         getdb = connect_db().cursor()
-        if len(new_task) > 150: #ensures task cannot be massive
+        if len(new_task) > 100: #ensures task cannot be massive
             flash("Please enter a shorter task!") 
             return redirect("/account")
         if new_task == "" or new_task.isspace(): #ensures task cannot be empty or blank spaces
