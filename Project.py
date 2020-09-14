@@ -13,6 +13,7 @@ app.database = "project.db"
 
 #connects database to webapp
 def connect_db():
+    '''Connects Database to App'''
     db = getattr(g, '_database', None)
     if db is None:
         db = g._database = sqlite3.connect(app.database)
@@ -20,6 +21,7 @@ def connect_db():
 
 #login required decorator
 def login_required(f):
+    '''If user ain't logged in yet tries to access account, they gotta login first'''
     @wraps(f)
     def wrap(*args, **kwargs):
         if 'logged_in' in session:
@@ -32,11 +34,13 @@ def login_required(f):
 #welcome/home page
 @app.route('/', methods=['GET', 'POST'])
 def welcome():
+    '''Has 2 buttons, either login or signup'''
     return render_template('welcome.html')
 
 #login page fo logins
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    '''Login Page for users to login if they have an account, obviously'''
     error = None
     if request.method == 'POST':
         getdb = connect_db().cursor()
@@ -58,6 +62,7 @@ def login():
 #signup page for signup stuff
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
+    '''Signup Page for users to create an account'''
     if request.method == 'POST':
         error = None
         getdb = connect_db().cursor()
@@ -82,6 +87,7 @@ def signup():
 @app.route('/account', methods=["GET", "POST"])
 @login_required
 def account():
+    '''User's Taskboard, showing all tasks.'''
     if request.method == "GET":
         user_id = session["logged_in"] 
         getdb = connect_db() #connects to db
@@ -93,6 +99,7 @@ def account():
 #adding tasks
 @app.route('/addtask', methods=["POST"])
 def add():
+    '''Adds a task to the database.'''
     if request.method == "POST":
         user_id = session["logged_in"]
         new_task = request.form["newtask"]
@@ -111,6 +118,7 @@ def add():
 #when clicked checkboxes
 @app.route('/checkTask', methods=["POST"])
 def check_task():
+    '''If task has been checked off, update task status to Completed'''
     if request.method == "POST":
         getdb = connect_db().cursor()
         task = int(request.form["taskid"])
@@ -123,6 +131,7 @@ def check_task():
 @app.route('/delete', methods=["POST"])
 @login_required
 def delete():
+    '''Deletes Tasks'''
     if request.method == "POST":
         getdb = connect_db().cursor()
         task = int(request.form["taskid"])
@@ -135,6 +144,7 @@ def delete():
 @app.route('/logout')
 @login_required
 def logout():
+    '''Logs the user out. Don't know what else you expected sorry lol'''
     session.pop('logged_in', None) #sets user session to none, effectively logging out user
     flash('Thanks for using my website!') #friendly message thing
     return redirect(url_for('welcome'))
